@@ -1,29 +1,38 @@
-gcloud set up
-	gcloud init
-		[2] log in with new acc
-		[45] project: eq-c2rw-research
-		[38] zone: australia-southeast1-b
-	gcloud auth application-default login
-install dependencies
-	upload setup.sh
-	chmod +x setup.sh
-	./setup.sh
-install pyramid plugin
-	sudo docker exec -it geoserver sh
-	cd /opt/apache-tomcat-9.0.68/webapps/geoserver/WEB-INF/lib/pyrami-plugin
-	mv * ../
-	cd ..
-	rmdir pyrami-plugin
-	exit
-	sudo docker restart <container id>
-fetch files and run gdal retile
-	upload extract.py, fetch.py and run.sh
-	chmod +x run.sh
-	nohup ./run.sh 1000 &
-	tail -10 nohup.out (to check progress)
-once finished - move pyramid to geoserver data dir
-	sudo mv mergedPyramid /var/lib/docker/volumes/data_dir/_data
-	navigate to http://<vm external ip>:80/geoserver
-	create a image pyramid store
-	specify path to file:data/mergedPyramid
-	publish layer
+create a vm instance
+	region: australia-southeast1
+	zone: australia-southeast1-b
+	configure boot disk size according to how much data to process
+	firewall:
+		allow http traffic
+		allow https traffic
+
+connect via ssh session:
+	gcloud set up
+		gcloud init
+			[2] log in with new acc
+			[45] project: eq-c2rw-research
+			[38] zone: australia-southeast1-b
+		gcloud auth application-default login
+	install dependencies
+		upload setup.sh
+		chmod +x setup.sh
+		./setup.sh
+	install pyramid plugin
+		sudo docker exec -it geoserver sh
+		cd /opt/apache-tomcat-9.0.68/webapps/geoserver/WEB-INF/lib/pyrami-plugin
+		mv * ../
+		cd ..
+		rmdir pyrami-plugin
+		exit
+		sudo docker restart <container id>
+	fetch files and run gdal retile
+		upload extract.py, fetch.py and run.sh
+		chmod +x run.sh
+		nohup ./run.sh <INSERT THE NUMBER OF IMAGES TO TILE> &
+		tail -10 nohup.out (to check progress)
+	once finished - move pyramid to geoserver data dir
+		sudo mv mergedPyramid /var/lib/docker/volumes/data_dir/_data
+		navigate to http://<vm external ip>:80/geoserver
+		create a image pyramid store
+		specify path to file:data/mergedPyramid
+		publish layer
