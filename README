@@ -17,14 +17,6 @@ connect via ssh session:
 		upload setup.sh
 		chmod +x setup.sh
 		./setup.sh
-	install pyramid plugin
-		sudo docker exec -it geoserver sh
-		cd /opt/apache-tomcat-9.0.68/webapps/geoserver/WEB-INF/lib/pyrami-plugin
-		mv * ../
-		cd ..
-		rmdir pyrami-plugin
-		exit
-		sudo docker restart <container id>
 	fetch files and run gdal retile
 		upload extract.py, fetch.py and run.sh
 		chmod +x run.sh

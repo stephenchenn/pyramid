@@ -45,6 +45,9 @@ sudo apt-get install unzip
 url="https://ixpeering.dl.sourceforge.net/project/geoserver/GeoServer/2.22.2/extensions/geoserver-2.22.2-pyramid-plugin.zip"
 # Download the file using curl
 curl -O "$url"
-unzip geoserver-2.22.2-pyramid-plugin.zip -d pyrami-plugin
+unzip geoserver-2.22.2-pyramid-plugin.zip -d pyramid-plugin
 container_id=$(sudo docker ps | awk '{if($2=="'"$image_id"'") print $1;}')
-sudo docker cp pyrami-plugin $container_id:/opt/apache-tomcat-9.0.68/webapps/geoserver/WEB-INF/lib
+cd pyramid-plugin
+sudo docker cp . $container_id:/opt/apache-tomcat-9.0.68/webapps/geoserver/WEB-INF/lib
+cd ..
+sudo docker restart $container_id
