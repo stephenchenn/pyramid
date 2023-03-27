@@ -35,7 +35,7 @@ mkdir mergedPyramid
 echo "successfully created target directory mergedPyramid"
 
 # Create tile pyramids of the VRT
-gdal_retile.py -v -r cubic -levels 4 -ps 2048 2048 -co "TILED=YES" -targetDir mergedPyramid tas_vrts/merged.vrt
+gdal_retile.py -v -r cubic -levels 4 -ps 2048 2048 -co "TILED=YES" -co "COMPRESS=LZW" -targetDir mergedPyramid tas_vrts/merged.vrt
 echo "successfully created tile pyramids for merged.vrt"
 
 echo "done"
