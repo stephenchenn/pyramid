@@ -15,6 +15,6 @@ des_crs = CRS.from_epsg(28355)
 # compute the transformer from the geodetic CRS to the projection CRS
 proj = Transformer.from_crs(src_crs, des_crs)
 # transform coordinates
-coordinates = proj.transform(int(sys.argv[1]), int(sys.argv[2]))
+coordinates = proj.transform(float(sys.argv[1]), float(sys.argv[2]))
 # print the result
 print(coordinates)
