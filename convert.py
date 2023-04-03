@@ -16,5 +16,5 @@ des_crs = CRS.from_epsg(28355)
 proj = Transformer.from_crs(src_crs, des_crs)
 # transform coordinates
 coordinates = proj.transform(int(sys.argv[1]), int(sys.argv[2]))
-# print result
+# print the result
 print(coordinates)
