@@ -46,7 +46,6 @@ directory_path = "TasNetworks/Ortho/RGB/Orthophoto"
 bucket = client.get_bucket(bucket_name)
 directory = bucket.list_blobs(prefix=directory_path)
 
-limit = 100000
 count = 0
 
 for file in directory:
@@ -57,11 +56,8 @@ for file in directory:
     x_utm = float(match.group(1))
     y_utm = float(match.group(2))
 
-    # print(f"( x: {x_utm}, y: {y_utm} )")
-
     if (( x_utm >= origin_x_utm_bottom_left ) and ( x_utm <= origin_x_utm_upper_right ) and ( y_utm >= origin_y_utm_bottom_left ) and ( y_utm <= origin_y_utm_upper_right )):
         print (f"({x_utm}, {y_utm})")
+        count = count + 1
 
-    count = count + 1
-    if count > limit:
-        break
+print(f"found {count/3} images within the zone")
