@@ -1,15 +1,8 @@
 #!/bin/bash
 
-# check if argument is passed
-if [ $# -eq 0 ]; then
-  echo "Usage: $0 <argument>"
-  exit 1
-fi
-
 # Fetch tasmania aerial images from google cloud bucket
-arg=$1
-python3 fetch.py $arg
-echo "successfully fetched $arg images"
+python3 fetchByZone.py 931 134
+echo "successfully fetched images from tile (931,134) in geographic mercator at zoom level 9"
 
 # Run gdalbuildvrt to create the merged.vrt file
 mkdir tas_vrts
@@ -35,7 +28,8 @@ mkdir mergedPyramid
 echo "successfully created target directory mergedPyramid"
 
 # Create tile pyramids of the VRT
-gdal_retile.py -v -r cubic -levels 4 -ps 2048 2048 -co "TILED=YES" -co "COMPRESS=LZW" -targetDir mergedPyramid tas_vrts/merged.vrt
+# -co "COMPRESS=LZW"
+gdal_retile.py -v -r cubic -levels 4 -ps 2048 2048 -co "TILED=YES" -targetDir mergedPyramid tas_vrts/merged.vrt
 echo "successfully created tile pyramids for merged.vrt"
 
 echo "done"

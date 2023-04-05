@@ -5,7 +5,6 @@ import math
 import sys
 import re
 
-
 # check if argument is passed
 # python3 fetchByZone.py 931 134
 if len(sys.argv) != 3:
@@ -40,9 +39,6 @@ for i in data['features']:
 # close geojson file
 f.close()
 
-print(len(files_to_fetch))
-
-
 # Create a client object for interacting with the storage API
 client = storage.Client()
 
@@ -61,8 +57,7 @@ count = 0
 index = 0
 
 # create folder
-folder_name = 'tas_images_zoom_lvl_' + \
-    str(zoom_lvl) + "_tile_" + str(x) + "_" + str(y)
+folder_name = 'tas_images'
 if not os.path.exists(folder_name):
     os.mkdir(folder_name)
 
@@ -70,14 +65,20 @@ for file in directory:
     # remove extension
     file_no_extension = ((file.name).split("."))[-2]
 
-    not_found = 1
+    # first assume the image is not within the specified zone
+    not_within_zone = 1
     for i in files_to_fetch:
         i_no_extension = (i.split("."))[-2]
+
+        # if the image is found in the list of images to fetch, flip the not_within_zone flag to false
         if (file_no_extension == i_no_extension):
-            not_found = 0
+            not_within_zone = 0
+            if ((file.name).split("."))[-1] == 'txt':
+                files_to_fetch.remove(i)
             break
 
-    if not_found == 1:
+    # if the image is not within zone, move on to the next
+    if not_within_zone == 1:
         continue
 
     index = math.floor(count/3)
@@ -95,5 +96,5 @@ for file in directory:
     count = count+1
     print(file_name + ' downloaded successfully.')
 
-
-print('Downloaded ' + str(count) + ' files')
+print(f"number of files to fetch: {len(files_to_fetch)} images within the zone")
+print(f"downloaded {str(count)}  files")

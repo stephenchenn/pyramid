@@ -18,9 +18,9 @@ connect via ssh session:
 		chmod +x setup.sh
 		./setup.sh
 	fetch files and run gdal retile
-		upload extract.py, fetch.py and run.sh
+		upload extract.py, fetchByZone.py, run.sh and geoJsonExtent_zoom_9.json
 		chmod +x run.sh
-		nohup ./run.sh <INSERT THE NUMBER OF IMAGES TO TILE> &
+		nohup ./run.sh &
 		tail -10 nohup.out (to check progress)
 	once finished - move pyramid to geoserver data dir
 		sudo mv mergedPyramid /var/lib/docker/volumes/data_dir/_data
