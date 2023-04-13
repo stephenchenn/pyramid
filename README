@@ -23,8 +23,11 @@ connect via ssh session:
 		nohup ./run.sh &
 		tail -10 nohup.out (to check progress)
 	once finished - move pyramid to geoserver data dir
+		cd mergedPyramid
+		mkdir 0
+		find . -maxdepth 1 -type f -name "*.tif" -print0 | xargs -0 mv -t ./0
+		cd ..
 		sudo mv mergedPyramid /var/lib/docker/volumes/data_dir/_data
-		navigate to http://<vm external ip>:80/geoserver
-		create a image pyramid store
-		specify path to file:data/mergedPyramid
+		navigate to http://<vm external ip>:80/geoserver (username: admin / password: geoserver)
+		create a image pyramid store and specify path to file:data/mergedPyramid
 		publish layer

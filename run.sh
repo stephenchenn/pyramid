@@ -27,9 +27,13 @@ echo "successfully added the corner coordinates to merge.vrt"
 mkdir mergedPyramid
 echo "successfully created target directory mergedPyramid"
 
+baseTileSize=$(python3 baseTileSize.py)
+baseTileX=$(echo $baseTileSize | awk '{print $1}')
+baseTileY=$(echo $baseTileSize | awk '{print $2}')
+
 # Create tile pyramids of the VRT
 # -co "COMPRESS=LZW"
-gdal_retile.py -v -r cubic -levels 4 -ps 2048 2048 -co "TILED=YES" -targetDir mergedPyramid tas_vrts/merged.vrt
+gdal_retile.py -v -r cubic -levels 4 -ps $baseTileX $baseTileY -co "TILED=YES" -targetDir mergedPyramid tas_vrts/merged.vrt
 echo "successfully created tile pyramids for merged.vrt"
 
 echo "done"
