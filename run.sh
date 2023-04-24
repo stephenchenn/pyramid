@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Check if the script was called with an argument
+if [ $# -eq 0 ]; then
+  echo "Usage: $0 <number of levels>"
+  exit 1
+fi
+# Store the argument in a variable
+levels="$1"
+
 # Fetch tasmania aerial images from google cloud bucket
 python3 fetchByZone.py 931 134
 echo "successfully fetched images from tile (931,134) in geographic mercator at zoom level 9"
@@ -27,13 +35,13 @@ echo "successfully added the corner coordinates to merge.vrt"
 mkdir mergedPyramid
 echo "successfully created target directory mergedPyramid"
 
-baseTileSize=$(python3 baseTileSize.py)
+baseTileSize=$(python3 baseTileSize.py "$levels")
 baseTileX=$(echo $baseTileSize | awk '{print $1}')
 baseTileY=$(echo $baseTileSize | awk '{print $2}')
 
 # Create tile pyramids of the VRT
 # -co "COMPRESS=LZW"
-gdal_retile.py -v -r cubic -levels 4 -ps $baseTileX $baseTileY -co "TILED=YES" -targetDir mergedPyramid tas_vrts/merged.vrt
+gdal_retile.py -v -r cubic -levels $levels -ps $baseTileX $baseTileY -co "TILED=YES" -targetDir mergedPyramid tas_vrts/merged.vrt
 echo "successfully created tile pyramids for merged.vrt"
 
 echo "done"
