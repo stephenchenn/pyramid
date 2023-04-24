@@ -31,3 +31,18 @@ connect via ssh session:
 		navigate to http://<vm external ip>:80/geoserver (username: admin / password: geoserver)
 		create a image pyramid store and specify path to file:data/mergedPyramid
 		publish layer
+
+to serve the layer to cesium js:
+	update geoserver config in web.xml to enable CORS
+		follow "Enable CORS" section in https://docs.geoserver.org/latest/en/user/production/container.html
+		sudo docker exec -it <container id> sh
+		cd /opt/apache-tomcat-9.0.68/webapps/geoserver/WEB-INF
+		apt-get update
+		apt-get install vim
+		vim web.xml and press i
+		uncomment <filter> and <filter-mapping> according to documentation
+		press esc and type :wq! to save
+		exit
+		sudo docker restart <container id> for it to take effect
+	reproject the layer from epsg:28355 to epsg:4326 in geoserver
+		edit layer and select reproject to declared crs and choose epsg:4326 as declared crs
