@@ -6,7 +6,6 @@ import sys
 import re
 
 # check if argument is passed
-# python3 fetchByZone.py 931 134
 if len(sys.argv) != 3:
     print("Usage: python3 fetchByZone.py <x tile index> <y tile index>")
     sys.exit(1)
@@ -15,13 +14,11 @@ if len(sys.argv) != 3:
 # crs: geographic mercator epsg:4326
 
 # define zone tile index (index 0,0 is at bottom-left)
-# we want (931,134)
 x = int(sys.argv[1])
 y = int(sys.argv[2])
-zoom_lvl = 9
 
 # only geojson file
-f = open('geoJsonExtent_zoom_9.json')
+f = open('imagery_geoJsonExtent_zoom_9.json')
 
 # load it as a dictionary
 data = json.load(f)
@@ -46,7 +43,7 @@ client = storage.Client()
 bucket_name = "eq-c2rw-research"
 
 # Specify the path of the directory within the bucket
-directory_path = "TasNetworks/Ortho/RGB/Orthophoto"
+directory_path = "TasNetworksProcessedFiles/Ortho/RGB/Orthophoto"
 
 # Get a reference to the bucket and the directory within it
 bucket = client.get_bucket(bucket_name)

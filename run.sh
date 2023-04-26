@@ -1,16 +1,19 @@
 #!/bin/bash
 
 # Check if the script was called with an argument
-if [ $# -eq 0 ]; then
-  echo "Usage: $0 <number of levels>"
+if [ $# -ne 3 ]; then
+  echo "Usage: $0 <number of levels> <x tile index> <y tile index>"
   exit 1
 fi
+
 # Store the argument in a variable
 levels="$1"
+x_tile_index="$2"
+y_tile_index="$3"
 
 # Fetch tasmania aerial images from google cloud bucket
-python3 fetchByZone.py 931 134
-echo "successfully fetched images from tile (931,134) in geographic mercator at zoom level 9"
+python3 fetchByZone.py $x_tile_index $y_tile_index
+echo "successfully fetched images from tile ($x_tile_index,$y_tile_index) in geographic mercator at zoom level 9"
 
 # Run gdalbuildvrt to create the merged.vrt file
 mkdir tas_vrts
