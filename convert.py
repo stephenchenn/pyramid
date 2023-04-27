@@ -17,4 +17,4 @@ proj = Transformer.from_crs(src_crs, des_crs)
 # transform coordinates
 coordinates = proj.transform(float(sys.argv[3]), float(sys.argv[4]))
 # print the result
-print(coordinates)
+print(f"{coordinates[0]} {coordinates[1]}")
