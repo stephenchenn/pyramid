@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <!-- Include the CesiumJS JavaScript and CSS files -->
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.104/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.104/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+</head>
+
+<body>
+  <div id="cesiumContainer"></div>
+  <script>
+
+    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5YTQyNmJjNS1mNjVkLTRhMDUtYmFmNy04NjcyMTJhNzhhYmQiLCJpZCI6MTM0MDMyLCJpYXQiOjE2ODE3MDgzNjd9.dQc1cISeFMcwAdutcbLCXaxzJXUwHRapopQKf3Q7aMY';
+
+    // Initialize the Cesium Viewer in the HTML element with the `cesiumContainer` ID.
+    const viewer = new Cesium.Viewer('cesiumContainer', {
+      terrainProvider: Cesium.createWorldTerrain()
+    });
+
+    // vm 7, 8, 9, 11, 13, 15, 16, 18
+    const urls = [
+      'http://34.151.75.8/geoserver/tasmania/wms',
+      'http://35.201.7.94/geoserver/tasmania/wms',
+      'http://35.189.20.158/geoserver/tasmania/wms',
+      'http://35.197.170.216/geoserver/tasmania/wms',
+      'http://34.151.97.142/geoserver/tasmania/wms',
+      'http://35.189.13.153/geoserver/tasmania/wms',
+      'http://34.129.173.37/geoserver/tasmania/wms',
+      'http://34.129.232.206/geoserver/tasmania/wms'
+    ];
+
+    const layers = [
+      ['tasmania:pyramid_466_368'],
+      ['tasmania:pyramid_467_376'],
+      ['tasmania:pyramid_467_375'],
+      ['tasmania:pyramid_462_376', 'tasmania:pyramid_461_369'],
+      ['tasmania:pyramid_464_380'],
+      ['tasmania:pyramid_466_379'],
+      ['tasmania:pyramid_467_373'],
+      ['tasmania:pyramid_467_371']
+    ];
+
+    const geoServerResources = urls.map(url => new Cesium.Resource({ url }));
+
+    // usage example
+    geoServerResources.forEach((resource, resourceIndex) => {
+      layers[resourceIndex].forEach((layer, layerIndex) => {
+        var wmsLayer = new Cesium.WebMapServiceImageryProvider({
+          url: resource,
+          layers: layers[resourceIndex][layerIndex],
+          parameters: {
+            service: 'WMS',
+            version: '1.1.1',
+            transparent: true,
+            format: 'image/png',
+            height: 768,
+            width: 573,
+            exceptions: 'application/vnd.ogc.se_inimage'
+          }
+        });
+
+        viewer.imageryLayers.addImageryProvider(wmsLayer);
+
+        // Fly the camera to San Francisco at the given longitude, latitude, and height.
+        viewer.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(146.71143, -46, 520000),
+          orientation: {
+            heading: Cesium.Math.toRadians(0.0),
+            pitch: Cesium.Math.toRadians(-50.0),
+          }
+        });
+      });
+    });
+
+  </script>
+  </div>
+</body>
+
+</html>
