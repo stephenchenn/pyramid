@@ -19,37 +19,62 @@
       terrainProvider: Cesium.createWorldTerrain()
     });
 
-    // vm 7, 8, 9, 11, 13, 15, 16, 18
-    const urls = [
-      'http://34.151.75.8/geoserver/tasmania/wms',
-      'http://35.201.7.94/geoserver/tasmania/wms',
-      'http://35.189.20.158/geoserver/tasmania/wms',
-      'http://35.197.170.216/geoserver/tasmania/wms',
-      'http://34.151.97.142/geoserver/tasmania/wms',
-      'http://35.189.13.153/geoserver/tasmania/wms',
-      'http://34.129.173.37/geoserver/tasmania/wms',
-      'http://34.129.232.206/geoserver/tasmania/wms'
+    const ips = [
+      "34.116.89.74",
+      "34.151.90.180",
+      "34.87.253.35",
+      "35.197.189.229",
+      "34.116.119.48",
+      "35.201.12.254",
+      "34.151.75.8",
+      "35.201.7.94",
+      "35.189.20.158",
+      "34.87.205.116",
+      "35.197.170.216",
+      "35.197.167.194",
+      "34.151.97.142",
+      "34.116.117.155",
+      "35.189.13.153",
+      "34.129.173.37",
+      "34.126.204.61",
+      "34.129.232.206",
+      "34.129.179.229",
+      "34.129.191.171",
+      "34.129.0.4"
     ];
 
     const layers = [
-      ['tasmania:pyramid_466_368'],
-      ['tasmania:pyramid_467_376'],
-      ['tasmania:pyramid_467_375'],
-      ['tasmania:pyramid_462_376', 'tasmania:pyramid_461_369'],
-      ['tasmania:pyramid_464_380'],
-      ['tasmania:pyramid_466_379'],
-      ['tasmania:pyramid_467_373'],
-      ['tasmania:pyramid_467_371']
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      ['466_368'],
+      ['467_376'],
+      ['467_375'],
+      [],
+      ['462_376', '461_369'],
+      [],
+      ['464_380'],
+      ['461_371', '460_370'],
+      ['466_379'],
+      ['467_373'],
+      ['467_370'],
+      ['467_371'],
+      ['463_376'],
+      [],
+      []
     ];
 
-    const geoServerResources = urls.map(url => new Cesium.Resource({ url }));
+    const geoServerResources = ips.map(ip => new Cesium.Resource({ url: "http://" + ip + "/geoserver/tasmania/wms" }));
 
     // usage example
     geoServerResources.forEach((resource, resourceIndex) => {
       layers[resourceIndex].forEach((layer, layerIndex) => {
         var wmsLayer = new Cesium.WebMapServiceImageryProvider({
           url: resource,
-          layers: layers[resourceIndex][layerIndex],
+          layers: "tasmania:pyramid_" + layers[resourceIndex][layerIndex],
           parameters: {
             service: 'WMS',
             version: '1.1.1',

@@ -30,6 +30,7 @@ connect via ssh session:
 		mv mergedPyramid mergedPyramid_<tile index x>_<tile index y>
 		sudo mv mergedPyramid_<tile index x>_<tile index y> /var/lib/docker/volumes/data_dir/_data
 		navigate to http://<vm external ip>:80/geoserver (username: admin / password: geoserver)
+		create workspace tasmania and set url to http://<vm external ip>/geoserver/tasmania and set it as default workspace
 		create a image pyramid store and specify path to file:data/mergedPyramid
 		publish layer
 		change SRS handling to Keep native to save computation
@@ -41,7 +42,7 @@ to serve the layer to cesium js:
 		sudo docker exec -it <container id> sh
 		cd /opt/apache-tomcat-9.0.68/webapps/geoserver/WEB-INF
 		apt-get update
-		apt-get install vim
+		apt-get install vim -y
 		vim web.xml (and press i to edit)
 		uncomment <filter> and <filter-mapping> according to documentation
 		press esc and type :wq! to save
