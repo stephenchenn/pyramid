@@ -13,12 +13,16 @@ connect via ssh session:
 			[45] project: eq-c2rw-research
 			[38] zone: australia-southeast1-b
 		gcloud auth application-default login
+	fetch files
+		sudo apt-get remove -y --purge man-db
+		sudo apt update
+		sudo apt install git
+		git pull git@github.com:stephenchenn/pyramid.git
 	install dependencies
 		upload setup.sh
 		chmod +x setup.sh
 		./setup.sh
-	fetch files and run gdal retile
-		upload fetchByZone.py, run.sh, baseTileSize.py and imagery_geoJsonExtent_zoom_9.json find_lvl.py
+	run gdal retile
 		chmod +x run.sh
 		nohup ./run.sh <number of levels> &
 		tail -10 nohup.out (to check progress)

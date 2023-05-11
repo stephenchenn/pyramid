@@ -27,12 +27,13 @@ echo "successfully added the corner coordinates to merge.vrt"
 mkdir mergedPyramid
 echo "successfully created target directory mergedPyramid"
 
-levels=$(python3 find_lvl.py)
-echo "number of levels: $levels"
+# levels=$(python3 find_lvl.py)
+# echo "number of levels: $levels"
 
 # Create tile pyramids of the VRT
 # -co "COMPRESS=LZW" 
-gdal_retile.py -v -r cubic -levels $levels -ps 2048 2048 -co "TILED=YES" -targetDir mergedPyramid tas_vrts/output.vrt
+# gdal_retile.py -v -r cubic -levels $levels -ps 2048 2048 -co "TILED=YES" -targetDir mergedPyramid tas_vrts/output.vrt
+gdal_retile.py -v -r cubic -levels 4 -ps 2048 2048 -co "TILED=YES" -targetDir mergedPyramid tas_vrts/output.vrt
 echo "successfully created tile pyramids for merged.vrt"
 
 echo "done"
