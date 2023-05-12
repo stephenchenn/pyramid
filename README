@@ -11,20 +11,15 @@ connect via ssh session:
 		gcloud init
 			[2] log in with new acc
 			[45] project: eq-c2rw-research
-			[38] zone: australia-southeast1-b
+			[38] zone: australia-southeast1-b or [59]
 		gcloud auth application-default login
-	fetch files
-		sudo apt-get remove -y --purge man-db
-		sudo apt update
-		sudo apt install git -y
-		git clone https://github.com/stephenchenn/pyramid.git
-		cd pyramid
 	install dependencies
+		upload setup.sh
 		chmod +x setup.sh
 		./setup.sh
 	run gdal retile
 		chmod +x run.sh
-		nohup ./run.sh <number of levels> &
+		nohup ./run.sh <x tile index> <y tile index> &
 		tail -10 nohup.out (to check progress)
 	once finished - move pyramid to geoserver data dir
 		cd mergedPyramid
@@ -37,7 +32,8 @@ connect via ssh session:
 		create workspace tasmania and set url to http://<vm external ip>/geoserver/tasmania and set it as default workspace
 		create a image pyramid store and specify path to file:data/mergedPyramid
 		publish layer
-		change SRS handling to Keep native to save computation
+		change declared SRS to EPSG:4326
+		change SRS handling to Reproject to Declared to save computation
 		deselect Use JAI ImageRead (deferred loading)
 
 to serve the layer to cesium js:

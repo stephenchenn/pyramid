@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Clone the files from github
+sudo apt-get remove -y --purge man-db
+sudo apt update
+sudo apt install git -y
+git clone https://github.com/stephenchenn/pyramid.git
+cd pyramid
+
 # GDAL
 # Update the package list
 sudo apt-get update
