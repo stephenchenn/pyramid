@@ -16,10 +16,10 @@ connect via ssh session:
 	fetch files
 		sudo apt-get remove -y --purge man-db
 		sudo apt update
-		sudo apt install git
-		git pull git@github.com:stephenchenn/pyramid.git
+		sudo apt install git -y
+		git clone https://github.com/stephenchenn/pyramid.git
+		cd pyramid
 	install dependencies
-		upload setup.sh
 		chmod +x setup.sh
 		./setup.sh
 	run gdal retile
