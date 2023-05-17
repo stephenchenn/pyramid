@@ -1,0 +1,16 @@
+ls | head -n 20
+tail -10 nohup.out
+ps aux | grep ./run.sh
+
+gsutil -m cp "gs://eq-c2rw-research/TasNetworks/DEM/DTM/TAS_Networks_Campaign_1-411000_5433000.tif" .
+
+to copy:
+gsutil -m cp -r gs://[YOUR_BUCKET_NAME]/[FOLDER_PATH] .
+
+to resume:
+gsutil -m cp -n -r . gs://[YOUR_BUCKET_NAME]
+
+nohup to background:
+nohup gsutil -m cp -r mergedPyramid gs://gdal-pyramids/463_375 > transfer.out &
+
+nohup gsutil -m cp -r gs://gdal-pyramids/463_375/mergedPyramid . &
