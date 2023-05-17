@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- Include the CesiumJS JavaScript and CSS files -->
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.104/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.104/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+  <script>
+
+    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5YTQyNmJjNS1mNjVkLTRhMDUtYmFmNy04NjcyMTJhNzhhYmQiLCJpZCI6MTM0MDMyLCJpYXQiOjE2ODE3MDgzNjd9.dQc1cISeFMcwAdutcbLCXaxzJXUwHRapopQKf3Q7aMY';
+
+    // Initialize the Cesium Viewer in the HTML element with the `cesiumContainer` ID.
+    const viewer = new Cesium.Viewer('cesiumContainer', {
+      terrainProvider: Cesium.createWorldTerrain()
+    });    
+
+    const geoServerResource = new Cesium.Resource({
+        url: 'http://34.116.117.155/geoserver/tasmania/wms'
+    });
+
+    var wmsLayer = new Cesium.WebMapServiceImageryProvider({
+      url : geoServerResource,
+      layers : 'tasmania:pyramid_464_375',
+      parameters : {
+        service : 'WMS',
+        version : '1.1.1',
+        transparent: true,
+        format : 'image/png',
+        height: 768,
+        width: 573,
+        exceptions: 'application/vnd.ogc.se_inimage'
+      }
+    });
+
+    viewer.imageryLayers.addImageryProvider(wmsLayer);
+
+    // Fly the camera to San Francisco at the given longitude, latitude, and height.
+    viewer.camera.flyTo({
+      destination : Cesium.Cartesian3.fromDegrees(146.6, -42.45, 55000),
+      orientation : {
+        heading : Cesium.Math.toRadians(0.0),
+        pitch : Cesium.Math.toRadians(-50.0),
+      }
+    });
+  </script>
+ </div>
+</body>
+</html>
